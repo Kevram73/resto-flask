@@ -1,0 +1,1 @@
+- url admin: https://www.tailwindawesome.com/resources/tailwind-admin-template/demo

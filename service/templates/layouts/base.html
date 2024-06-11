@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="megakit,business,company,agency,multipurpose,modern,bootstrap4">
+  
+  <meta name="author" content="themefisher.com">
+
+  <title>ODYCA Immigration</title>
+
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/slick-carousel/slick/slick-theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/slick-carousel/slick/slick.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/magnific-popup/dist/magnific-popup.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome/css/all.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/themify/css/themify-icons.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
+</head>
+<body>
+    {% include 'partials/header.html' %}
+    {% block content %}
+    {% endblock %}
+    <!-- Main jQuery -->
+    <script src="{{ url_for('static', filename='plugins/jquery/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+    <!-- Bootstrap 4.3.1 -->
+    <script src="{{ url_for('static', filename='plugins/bootstrap/js/popper.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+   <!--  Magnific Popup-->
+    <script src="{{ url_for('static', filename='plugins/magnific-popup/dist/jquery.magnific-popup.min.js') }}"></script>
+    <!-- Slick Slider -->
+    <script src="{{ url_for('static', filename='plugins/slick-carousel/slick/slick.min.js') }}"></script>
+    <!-- Counterup -->
+    <script src="{{ url_for('static', filename='plugins/counterup/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/counterup/jquery.counterup.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/google-map/map.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH_67tKmeWrlO9khdmRjuOh_roPjTt1vk&callback=initMap" async defer></script>
+
+</body>
+</html>
