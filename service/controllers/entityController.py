@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from flask import abort, jsonify, render_template, request
 from flask_login import current_user
 from service.models import Entity
@@ -24,8 +24,8 @@ class EntityController:
             abort(400)
         data = {
             'name': request.json['name'],
-            'created_at': datetime.utcnow(),  # Optionally set defaults for fields not provided
-            'updated_at': datetime.utcnow()
+            'created_at': datetime.now(timezone.utc),  # Optionally set defaults for fields not provided
+            'updated_at': datetime.now(timezone.utc)
         }
         entity = self.service.create(Entity, data)
         return jsonify(entity), 201
@@ -40,7 +40,7 @@ class EntityController:
         if 'name' in request.json:
             data['name'] = request.json['name']
         if data:
-            data['updated_at'] = datetime.utcnow()
+            data['updated_at'] = datetime.now(timezone.utc)
         result = self.service.update(Entity, id, data)
         if not result:
             abort(404)

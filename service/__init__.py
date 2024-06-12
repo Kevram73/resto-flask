@@ -4,7 +4,7 @@ from flask_wtf.csrf import CSRFProtect
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/resto'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/resto'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['STATIC_FOLDER'] = "./static/"
 app.config['SECRET_KEY'] = 'secret_key'

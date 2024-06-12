@@ -1,5 +1,5 @@
 from service import db
-from datetime import datetime
+from datetime import datetime, timezone
 from flask_login import UserMixin
 
 
@@ -7,8 +7,8 @@ class Entity(db.Model):
     __tablename__ = "entities"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"entity('{self.name}')"
@@ -17,8 +17,8 @@ class Group(db.Model):
     __tablename__ = "groups"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"group('{self.name}')"
@@ -33,8 +33,8 @@ class User(db.Model, UserMixin):
     gender = db.Column(db.String(20))
     group_id = db.Column(db.Integer, db.ForeignKey(
         'groups.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"user('{self.username}', '{self.email}')"
@@ -48,8 +48,8 @@ class Table(db.Model):
     available = db.Column(db.Boolean, default=True, nullable=False)
     active = db.Column(db.Boolean, default=True, nullable=False)
     entity_id = db.Column(db.Integer, db.ForeignKey('entities.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"<Table {self.table_name}>"
@@ -62,8 +62,8 @@ class Fournisseur(db.Model):
     contact = db.Column(db.String(120), unique=True)
     address = db.Column(db.String(120))
     balance = db.Column(db.Float)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"user('{self.name}', '{self.email}')"
@@ -75,8 +75,8 @@ class UserEntity(db.Model):
         'users.id'), nullable=False)
     entity_id = db.Column(db.Integer, db.ForeignKey(
         'entities.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"user_group('{self.user_id}', '{self.group_id}')"
@@ -85,8 +85,8 @@ class ArticleFamily(db.Model):
     __tablename__ = "article_families"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"article_family('{self.name}')"
@@ -105,9 +105,8 @@ class Article(db.Model):
         'users.id'), nullable=False)
     fournisseur_id = db.Column(db.Integer, db.ForeignKey(
         'fournisseurs.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def user(self):
         return User.query.get(self.user_id)
@@ -120,7 +119,7 @@ class Casheer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
     balance = db.Column(db.Float, default=0.0)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     
     def __repr__(self):
         return f"casheer('{self.name}')"
@@ -129,7 +128,7 @@ class TypeCategory(db.Model):
     __tablename__ = "type_categories"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     
     def __repr__(self):
         return f"type_category('{self.name}')"
@@ -141,8 +140,8 @@ class Category(db.Model):
     type_category_id = db.Column(db.Integer, db.ForeignKey(
         'type_categories.id'), nullable=False)
     active = db.Column(db.Boolean)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     
     def __repr__(self):
         return f"category('{self.name}')"
@@ -158,8 +157,8 @@ class Company(db.Model):
     phone = db.Column(db.String(16))
     country = db.Column(db.String(32), default="Togo")
     currency = db.Column(db.String(10))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"article('{self.title}')"
@@ -173,8 +172,8 @@ class Depense(db.Model):
     amount_modif = db.Column(db.Float, default=0.0)
     user_id = db.Column(db.Integer, db.ForeignKey(
         'users.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
         return f"{self.libelle}"
@@ -187,8 +186,8 @@ class ExploitAccount(db.Model):
     libelle = db.Column(db.String(256))
     description = db.Column(db.String(256))
     amount = db.Column(db.Float)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     casheer_id = db.Column(db.Integer, db.ForeignKey(
         'casheers.id'), nullable=False)
 
@@ -212,7 +211,7 @@ class Order(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     bill_no = db.Column(db.String(50), nullable=False)
-    date_time = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    date_time = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
     gross_amount = db.Column(db.Float, nullable=False)
     service_charge_rate = db.Column(db.Float, nullable=False)
     service_charge_amount = db.Column(db.Float, nullable=False)
@@ -225,8 +224,8 @@ class Order(db.Model):
     paid_status = db.Column(db.Boolean, default=False, nullable=False)
     made_status = db.Column(db.Boolean, default=False, nullable=False)
     entity_id = db.Column(db.Integer, db.ForeignKey('entities.id'), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     
     def __repr__(self):
         return f"<Order {self.bill_no}>"
@@ -243,8 +242,8 @@ class OrderItem(db.Model):
     amount = db.Column(db.Float, nullable=False)
     made_at = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.String(50), nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
+    updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
     
     def __repr__(self):
         return f"<OrderItem {self.id} for Order {self.order_id}>"
@@ -257,7 +256,7 @@ class Stock(db.Model):
     in_out = db.Column(db.Boolean, nullable=False)  # True for in, False for out
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'), nullable=False)
     fournisseur_id = db.Column(db.Integer, db.ForeignKey('fournisseurs.id'), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc), nullable=False)
 
     def __repr__(self):
         return f"<Stock {'in' if self.in_out else 'out'} {self.quantity} units>"
