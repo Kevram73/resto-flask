@@ -11,7 +11,7 @@ class GroupController:
         
     def get_groups(self):
         groups = self.service.get_all(Group)
-        return render_template("pages/admin/pages/groups/index.html", user=current_user.username, data=groups)
+        return render_template("pages/users/group.html", user='current_user.username', data=groups)
 
     def get_group(self, id):
         group = self.service.get(Group, id)

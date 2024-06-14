@@ -20,7 +20,7 @@ class UserController:
         
     def get_users(self):
         users = self.service.get_all(User)
-        return render_template("pages/admin/pages/users/index.html", user=current_user.username, data=users)
+        return render_template("pages/users/index.html", user='current_user.username', data=users)
 
     def get_user(self, id):
         user = self.service.get(User, id)
@@ -47,7 +47,7 @@ class UserController:
             }
             self.service.create(User, data)
             return redirect(url_for('admin_users'))
-        return render_template("pages/admin/pages/users/new.html", user=current_user.username)
+        return render_template("pages/users/new.html", user=current_user.username)
 
     def update_user(self, id):
         user = self.service.get(User, id)
@@ -70,7 +70,7 @@ class UserController:
 
             self.service.update(User, id, data)
             return redirect(url_for('admin_users'))
-        return render_template("pages/admin/pages/users/edit.html", user=current_user.username, data=user)
+        return render_template("pages/users/edit.html", user=current_user.username, data=user)
 
 
     def delete_user(self, id):

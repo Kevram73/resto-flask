@@ -1,0 +1,222 @@
+{% extends './layouts/base_admin.html' %}
+
+{% block content %}
+<main class="w-full flex-grow p-6">
+    <div class="text-xl pb-0 items-center">
+        <h1 class="text-3xl text-black pb-6">Tables</h1>
+    </div>
+
+    <div class="w-full mt-8">
+        <div class="grid gap-2 grid-cols-4 place-content-between text-xl pb-0 items-center">
+            <p>
+                <i class="fas fa-list mr-3"></i> Table Example
+            </p>
+            <div></div>
+            <div></div>
+            <div class="px-5 py-5 text-sm">
+                <div class="flex items-center text-gray-900 whitespace-no-wrap">
+                    <div class="p-0">
+                        <button
+                            class="open-add-modal p-1 mb-0 bg-blue-500 rounded-xl hover:rounded-3xl hover:bg-blue-600 transition-all text-white duration-300">
+                            <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="25"
+                                height="25" fill="none" viewBox="0 0 25 25" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.5 12C20.5376 12 23 14.4624 23 17.5C23 20.5376 20.5376 23 17.5 23C14.4624 23 12 20.5376 12 17.5C12 14.4624 14.4624 12 17.5 12ZM17.5 13.9992L17.4101 14.0073C17.206 14.0443 17.0451 14.2053 17.0081 14.4094L17 14.4992L16.9996 16.9992L14.4977 17L14.4078 17.0081C14.2037 17.0451 14.0427 17.206 14.0057 17.4101L13.9977 17.5L14.0057 17.5899C14.0427 17.794 14.2037 17.9549 14.4078 17.9919L14.4977 18L17.0007 17.9992L17.0011 20.5035L17.0092 20.5934C17.0462 20.7975 17.2071 20.9584 17.4112 20.9954L17.5011 21.0035L17.591 20.9954C17.7951 20.9584 17.956 20.7975 17.9931 20.5934L18.0011 20.5035L18.0007 17.9992L20.5046 18L20.5944 17.9919C20.7985 17.9549 20.9595 17.794 20.9965 17.5899L21.0046 17.5L20.9965 17.4101C20.9595 17.206 20.7985 17.0451 20.5944 17.0081L20.5046 17L17.9996 16.9992L18 14.4992L17.9919 14.4094C17.9549 14.2053 17.794 14.0443 17.5899 14.0073L17.5 13.9992ZM14.254 10C15.0886 10 15.817 10.4543 16.2054 11.1292C13.2353 11.7297 11 14.3538 11 17.5C11 18.7892 11.3753 19.9907 12.0226 21.0012L12.003 21C9.51712 21 7.50193 18.9848 7.50193 16.499V12.25C7.50193 11.0074 8.50929 10 9.75193 10H14.254ZM7.40645 10.0003C6.89291 10.5355 6.56081 11.2462 6.50903 12.0335L6.50193 12.25V16.499C6.50193 17.3456 6.69319 18.1476 7.03487 18.864C6.70577 18.953 6.35899 19 6.00124 19C3.79142 19 2 17.2086 2 14.9988V12.25C2 11.0591 2.92516 10.0844 4.09595 10.0052L4.25 10L7.40645 10.0003ZM19.75 10C20.9926 10 22 11.0074 22 12.25L22.0008 12.8104C20.8328 11.6891 19.2469 11 17.5 11L17.2568 11.0045C17.1013 10.6296 16.8769 10.2894 16.5995 10.0003L19.75 10ZM18.5 4C19.8807 4 21 5.11929 21 6.5C21 7.88071 19.8807 9 18.5 9C17.1193 9 16 7.88071 16 6.5C16 5.11929 17.1193 4 18.5 4ZM12 3C13.6569 3 15 4.34315 15 6C15 7.65685 13.6569 9 12 9C10.3431 9 9 7.65685 9 6C9 4.34315 10.3431 3 12 3ZM5.5 4C6.88071 4 8 5.11929 8 6.5C8 7.88071 6.88071 9 5.5 9C4.11929 9 3 7.88071 3 6.5C3 5.11929 4.11929 4 5.5 4Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="text-xl mb-1">
+                        Ajouter
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white overflow-auto">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Groupe
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Créer le
+                        </th>
+                        <th
+                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 w-10 h-10">
+                                    <img class="w-full h-full rounded-full"
+                                        src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+                                        alt="" />
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-gray-900 whitespace-no-wrap">
+                                        Vera Carpenter
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                Jan 21, 2020
+                            </p>
+                        </td>
+                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                <button
+                                    class="open-edit-modal middle center p-1 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                </button>
+                                <a href="">
+                                    <button onclick="return confirm('Are you sure you want to delete this article?');"
+                                        class="middle center p-1 bg-red-500 rounded-xl hover:rounded-3xl hover:bg-red-600 transition-all duration-300 text-white">
+                                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                            stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                                        </svg>
+                                    </button>
+                                </a>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal add-main-modal fadeOut fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster"
+        style="background: rgba(0,0,0,.7); display: none;">
+        <div
+            class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <!--Title-->
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold">Créer</p>
+                    <div class="modal-close cursor-pointer z-50">
+                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path
+                                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+                <!--Body-->
+                <form action="{{url_for('admin_groups_add')}}" method="POST" enctype="text/plain">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <div class="my-5">
+                        <div class="mb-5">
+                            <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                                Nom
+                            </label>
+                            <input type="text" name="name" id="name" placeholder="Nom"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
+                    </div>
+                    <!--Footer-->
+                    <div class="flex justify-end pt-2">
+                        <button
+                            class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancel</button>
+                        <button type="submit"
+                            class="focus:outline-none px-4 bg-blue-300 p-3 ml-3 rounded-lg text-white hover:bg-blue-500">Confirm</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal edit-main-modal fadeOut fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster"
+        style="background: rgba(0,0,0,.7); display: none;">
+        <div
+            class="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            <div class="modal-content py-4 text-left px-6">
+                <!--Title-->
+                <div class="flex justify-between items-center pb-3">
+                    <p class="text-2xl font-bold">Modifier</p>
+                    <div class="modal-close cursor-pointer z-50">
+                        <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                            viewBox="0 0 18 18">
+                            <path
+                                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+                <!--Body-->
+                <form action="">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <div class="my-5">
+                        <div class="mb-5">
+                            <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                                Nom
+                            </label>
+                            <input type="text" name="name" id="name" placeholder="Nom"
+                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                        </div>
+                    </div>
+                    <!--Footer-->
+                    <div class="flex justify-end pt-2">
+                        <button
+                            class="focus:outline-none modal-close px-4 bg-gray-400 p-3 rounded-lg text-black hover:bg-gray-300">Cancel</button>
+                        <button
+                            class="focus:outline-none px-4 bg-blue-300 p-3 ml-3 rounded-lg text-white hover:bg-blue-500">Confirm</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        const addModal = document.querySelector('.add-main-modal');
+        const editModal = document.querySelector('.edit-main-modal');
+        const closeButtons = document.querySelectorAll('.modal-close');
+
+        const modalClose = (modal) => {
+            modal.classList.remove('fadeIn');
+            modal.classList.add('fadeOut');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 50);
+        }
+
+        const openModal = (modal) => {
+            modal.classList.remove('fadeOut');
+            modal.classList.add('fadeIn');
+            modal.style.display = 'flex';
+        }
+
+        closeButtons.forEach(button => {
+            button.onclick = (e) => {
+                const modal = button.closest('.modal');
+                modalClose(modal);
+            }
+        });
+
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                modalClose(event.target);
+            }
+        }
+
+        // Example functions to open the modals
+        document.querySelector('.open-add-modal').onclick = () => openModal(addModal);
+        document.querySelector('.open-edit-modal').onclick = () => openModal(editModal);
+    </script>
+
+</main>
+{% endblock %}
