@@ -1,4 +1,4 @@
-from service import app, db, csrf
+from service import app, db
 from flask import render_template, request, jsonify, make_response, url_for, flash, redirect
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from service.controllers.authController import AuthController
