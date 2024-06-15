@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from flask import abort, jsonify, render_template, request
+from flask import abort, jsonify, render_template, request, redirect, url_for
 from flask_login import current_user
 from service.models import Group
 from service.services.baseService import BaseService
@@ -20,15 +20,15 @@ class GroupController:
         return jsonify(group)
     
     def create_group(self):
-        if not request.json or not 'name' in request.json:
+        if not request.form or not 'name' in request.form:
             abort(400)
         data = {
-            'name': request.json['name'],
+            'name': request.form['name'],
             'created_at': datetime.now(timezone.utc),  # Optionally set defaults for fields not provided
             'updated_at': datetime.now(timezone.utc)
         }
         group = self.service.create(Group, data)
-        return jsonify(group), 201
+        return redirect(url_for('admin_groups'))
 
     def update_group(self, id):
         if not request.json:

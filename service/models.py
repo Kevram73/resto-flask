@@ -23,6 +23,14 @@ class Group(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"group('{self.name}')"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
 
 class User(db.Model, UserMixin):
     __tablename__ = "users"
