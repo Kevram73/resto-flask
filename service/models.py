@@ -1,9 +1,10 @@
 from service import db
 from datetime import datetime, timezone
 from flask_login import UserMixin
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Entity(db.Model):
+class Entity(db.Model, SerializerMixin):
     __tablename__ = "entities"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
@@ -13,7 +14,7 @@ class Entity(db.Model):
     def __repr__(self):
         return f"entity('{self.name}')"
 
-class Group(db.Model):
+class Group(db.Model, SerializerMixin):
     __tablename__ = "groups"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
@@ -39,7 +40,7 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"user('{self.username}', '{self.email}')"
 
-class Table(db.Model):
+class Table(db.Model, SerializerMixin):
     __tablename__ = "tables"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -54,7 +55,7 @@ class Table(db.Model):
     def __repr__(self):
         return f"<Table {self.table_name}>"
     
-class Fournisseur(db.Model):
+class Fournisseur(db.Model, SerializerMixin):
     __tablename__ = "fournisseurs"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), unique=True)
@@ -68,7 +69,7 @@ class Fournisseur(db.Model):
     def __repr__(self):
         return f"user('{self.name}', '{self.email}')"
 
-class UserEntity(db.Model):
+class UserEntity(db.Model, SerializerMixin):
     __tablename__ = "user_entities"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(
@@ -81,7 +82,7 @@ class UserEntity(db.Model):
     def __repr__(self):
         return f"user_group('{self.user_id}', '{self.group_id}')"
 
-class ArticleFamily(db.Model):
+class ArticleFamily(db.Model, SerializerMixin):
     __tablename__ = "article_families"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
@@ -91,7 +92,7 @@ class ArticleFamily(db.Model):
     def __repr__(self):
         return f"article_family('{self.name}')"
 
-class Article(db.Model):
+class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"
     id = db.Column(db.Integer, primary_key=True)
     libelle = db.Column(db.String(256))
@@ -114,7 +115,7 @@ class Article(db.Model):
     def __repr__(self):
         return f"article('{self.libelle}')"
     
-class Casheer(db.Model):
+class Casheer(db.Model, SerializerMixin):
     __tablename__ = "casheers"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
@@ -124,7 +125,7 @@ class Casheer(db.Model):
     def __repr__(self):
         return f"casheer('{self.name}')"
     
-class TypeCategory(db.Model):
+class TypeCategory(db.Model, SerializerMixin):
     __tablename__ = "type_categories"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
@@ -133,7 +134,7 @@ class TypeCategory(db.Model):
     def __repr__(self):
         return f"type_category('{self.name}')"
 
-class Category(db.Model):
+class Category(db.Model, SerializerMixin):
     __tablename__ = "categories"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
@@ -147,7 +148,7 @@ class Category(db.Model):
         return f"category('{self.name}')"
 
 
-class Company(db.Model):
+class Company(db.Model, SerializerMixin):
     __tablename__ = "companies"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256), unique=True)
@@ -164,7 +165,7 @@ class Company(db.Model):
         return f"article('{self.title}')"
 
 
-class Depense(db.Model):
+class Depense(db.Model, SerializerMixin):
     __tablename__ = "depenses"
     id = db.Column(db.Integer, primary_key=True)
     libelle = db.Column(db.String(256))
@@ -178,7 +179,7 @@ class Depense(db.Model):
     def __repr__(self):
         return f"{self.libelle}"
 
-class ExploitAccount(db.Model):
+class ExploitAccount(db.Model, SerializerMixin):
     __tablename__ = "exploit_account"
     id = db.Column(db.Integer, primary_key=True)
     type_category = db.Column(db.Integer, db.ForeignKey(
@@ -191,7 +192,7 @@ class ExploitAccount(db.Model):
     casheer_id = db.Column(db.Integer, db.ForeignKey(
         'casheers.id'), nullable=False)
 
-class Product(db.Model):
+class Product(db.Model, SerializerMixin):
     __tablename__ = "products"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -206,7 +207,7 @@ class Product(db.Model):
     def __repr__(self):
         return f"<Product {self.name}>"
     
-class Order(db.Model):
+class Order(db.Model, SerializerMixin):
     __tablename__ = "orders"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -231,7 +232,7 @@ class Order(db.Model):
         return f"<Order {self.bill_no}>"
     
 
-class OrderItem(db.Model):
+class OrderItem(db.Model, SerializerMixin):
     __tablename__ = "order_items"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -248,7 +249,7 @@ class OrderItem(db.Model):
     def __repr__(self):
         return f"<OrderItem {self.id} for Order {self.order_id}>"
 
-class Stock(db.Model):
+class Stock(db.Model, SerializerMixin):
     __tablename__ = "stocks"
 
     id = db.Column(db.Integer, primary_key=True)

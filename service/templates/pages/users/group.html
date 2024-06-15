@@ -117,8 +117,7 @@
                     </div>
                 </div>
                 <!--Body-->
-                <form action="{{url_for('admin_groups_add')}}" method="POST" enctype="text/plain">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                <form class="jsonDataForm" data-endpoint="{{url_for('admin_groups_add')}}">
                     <div class="my-5">
                         <div class="mb-5">
                             <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">

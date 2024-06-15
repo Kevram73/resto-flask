@@ -49,6 +49,7 @@ def admin_groups_get(id):
 
 #@login_required
 @app.route('/admin/groups/add', methods=['GET', 'POST'])
+@csrf.exempt
 def admin_groups_add():
     return groupController.create_group()
     
