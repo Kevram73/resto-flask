@@ -70,42 +70,40 @@
         integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 
     <script>
-        document.querySelectorAll('.jsonDataForm').forEach(form => {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent the form from submitting normally
+        const addModal = document.querySelector('.add-main-modal');
+        const editModal = document.querySelector('.edit-main-modal');
+        const closeButtons = document.querySelectorAll('.modal-close');
 
-                const formData = new FormData(this);
-                const jsonData = {};
-                formData.forEach((value, key) => {
-                    jsonData[key] = value;
-                });
+        const modalClose = (modal) => {
+            modal.classList.remove('fadeIn');
+            modal.classList.add('fadeOut');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 50);
+        }
 
-                // Get the endpoint from the data-endpoint attribute
-                const endpoint = this.getAttribute('data-endpoint');
+        const openModal = (modal) => {
+            modal.classList.remove('fadeOut');
+            modal.classList.add('fadeIn');
+            modal.style.display = 'flex';
+        }
 
-                fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(jsonData)
-                })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Response from Flask:', data);
-                        // Optionally, display a success message or redirect to another page
-                        alert('Successfully!');
-                    })
-                    .catch(error => {
-                        console.error('There was a problem with the fetch operation:', error);
-                    });
-            });
+        closeButtons.forEach(button => {
+            button.onclick = (e) => {
+                const modal = button.closest('.modal');
+                modalClose(modal);
+            }
         });
+
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                modalClose(event.target);
+            }
+        }
+
+        // Example functions to open the modals
+        document.querySelector('.open-add-modal').onclick = () => openModal(addModal);
+        document.querySelector('.open-edit-modal').onclick = () => openModal(editModal);
     </script>
 </body>
 

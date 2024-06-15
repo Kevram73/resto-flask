@@ -49,7 +49,6 @@ def admin_groups_get(id):
 
 #@login_required
 @app.route('/admin/groups/add', methods=['GET', 'POST'])
-@csrf.exempt
 def admin_groups_add():
     return groupController.create_group()
     
@@ -58,8 +57,8 @@ def admin_groups_add():
 def admin_groups_edit(id):
     return groupController.update_group(id)
     
-@login_required
-@app.route('/admin/groups/delete/<int:id>', methods=['POST'])  # Changed to POST for better practice
+#@login_required
+@app.route('/admin/groups/delete/<int:id>', methods=['GET','POST'])  # Changed to POST for better practice
 def admin_groups_delete(id):
     return groupController.delete_group(id)
 
