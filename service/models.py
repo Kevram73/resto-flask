@@ -13,6 +13,14 @@ class Entity(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"entity('{self.name}')"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
 
 class Group(db.Model, SerializerMixin):
     __tablename__ = "groups"
@@ -32,7 +40,7 @@ class Group(db.Model, SerializerMixin):
             'updated_at': self.updated_at,
         }
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, SerializerMixin):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True)
@@ -47,6 +55,18 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"user('{self.username}', '{self.email}')"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'phone': self.phone,
+            'gender': self.gender,
+            'group_id': self.group_id,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
 
 class Table(db.Model, SerializerMixin):
     __tablename__ = "tables"

@@ -73,18 +73,18 @@ def admin_users():
 def admin_users_get(id):
     return userController.get_user(id)
 
-@login_required
+#@login_required
 @app.route('/admin/users/add', methods=['GET', 'POST'])
 def admin_users_add():
     return userController.create_user()
     
-@login_required
+#@login_required
 @app.route('/admin/users/edit/<int:id>', methods=['GET', 'POST'])
 def admin_users_edit(id):
     return userController.update_user(id)
   
 @login_required
-@app.route('/admin/users/delete/<int:id>', methods=['POST'])  # Changed to POST for better practice
+@app.route('/admin/users/delete/<int:id>', methods=['GET','POST'])  # Changed to POST for better practice
 def admin_users_delete(id):
     return userController.delete_user(id)
 
@@ -110,6 +110,6 @@ def admin_entities_update(id):
     return entityController.update_entity(id)
 
 @login_required
-@app.route('/admin/entities/delete/<int:id>', methods=['POST'])
+@app.route('/admin/entities/delete/<int:id>', methods=['GET','POST'])
 def admin_entities_delete(id):
     return entityController.delete_entity(id)
