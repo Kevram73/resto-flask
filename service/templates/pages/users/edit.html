@@ -1,0 +1,99 @@
+{% extends './layouts/base_admin.html' %}
+
+{% block content %}
+<main class="w-full flex-grow p-6">
+    <div class="w-full md:mt-12 md:mx-60">
+        <div
+            class="top-0 right-auto left-auto z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative place-self-auto w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            Modifier l'Utilisateur
+                        </h3>
+                        <a href="{{url_for('admin_users')}}">
+                            <button type="button"
+                                class="text-white inline-flex items-center bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                </svg>
+                                <div class="">Annuler</div>
+                            </button>
+                        </a>
+                    </div>
+                    <!-- Modal body -->
+                    <form action="{{url_for('admin_users_update',id=data.id)}}" method="POST"
+                        enctype="multipart/form-data" class="p-4 md:p-5">
+                        <div class="grid gap-4 mb-4 grid-cols-4">
+                            <div class="col-span-4">
+                                <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Nom
+                                    d'utilisateur</label>
+                                <input type="text" name="username" id="username" value="{{data.username}}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="Nom d'utilisateur" required="">
+                            </div>
+                            <div class="col-span-4 sm:col-span-2">
+                                <label for="gender" class="block mb-2 text-sm font-medium text-gray-900">Sexe</label>
+                                <select id="gender" name="gender"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                    <option selected="">Selectionner le sexe</option>
+                                    <option value="Masculin" {% if data.gender=='Masculin' %}selected{% endif %}>
+                                        Masculin</option>
+                                    <option value="Féminin" {% if data.gender=='Féminin' %}selected{% endif %}>Féminin
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-span-4 sm:col-span-2">
+                                <label for="group_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Groupe</label>
+                                <select id="group_id" name="group_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                    <option selected="">Selectionner le groupe</option>
+                                    {% if groups %}
+                                    {% for group in groups %}
+                                    <option value="{{group.id}}" {% if group.id==data.group_id %}selected{% endif %}>
+                                        {{group.name}}</option>
+                                    {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+                            <div class="col-span-4">
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Numéro de
+                                    Téléphone</label>
+                                <div class="relative w-full">
+                                    <input type="text" id="phone" name="phone" value="{{data.phone}}"
+                                        aria-describedby="helper-text-explanation"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                                        pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" placeholder="99 99 99 99"
+                                        required />
+                                </div>
+                            </div>
+                            <div class="col-span-4">
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                                <input type="email" name="email" id="email" value="{{data.email}}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="exemple@gmail.com" required="">
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6" />
+                            </svg>
+
+                            Modifier
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+</main>
+{% endblock %}
