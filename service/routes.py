@@ -54,7 +54,7 @@ def admin_groups_add():
     
 @login_required
 @app.route('/admin/groups/edit/<int:id>', methods=['GET', 'POST'])
-def admin_groups_edit(id):
+def admin_groups_update(id):
     return groupController.update_group(id)
     
 #@login_required
@@ -80,7 +80,7 @@ def admin_users_add():
     
 #@login_required
 @app.route('/admin/users/edit/<int:id>', methods=['GET', 'POST'])
-def admin_users_edit(id):
+def admin_users_update(id):
     return userController.update_user(id)
   
 @login_required

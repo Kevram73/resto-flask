@@ -32,15 +32,20 @@
             <i class="fas fa-calendar mr-3"></i>
             Calendar
         </a>
-        <a href="{{url_for('admin_groups')}}"
-            class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
-            <i class="fas fa-users mr-3"></i>
-            Groups
-        </a>
         <a href="{{url_for('admin_users')}}"
             class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
             <i class="fas fa-users mr-3"></i>
             Users
+        </a>
+        <a href="{{url_for('admin_groups')}}"
+            class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-folder-open mr-3"></i>
+            Groups
+        </a>
+        <a href="{{url_for('admin_entities')}}"
+            class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <i class="fas fa-folder-open mr-3"></i>
+            Sections
         </a>
     </nav>
     <a href="#"
