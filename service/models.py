@@ -83,6 +83,18 @@ class Table(db.Model, SerializerMixin):
     def __repr__(self):
         return f"<Table {self.table_name}>"
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'table_name': self.table_name,
+            'capacity': self.capacity,
+            'available': self.available,
+            'active': self.active,
+            'entity_id': self.entity_id,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
+    
 class Fournisseur(db.Model, SerializerMixin):
     __tablename__ = "fournisseurs"
     id = db.Column(db.Integer, primary_key=True)
@@ -108,7 +120,7 @@ class UserEntity(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
-        return f"user_group('{self.user_id}', '{self.group_id}')"
+        return f"user_group('{self.user_id}', '{self.entity_id}')"
 
 class ArticleFamily(db.Model, SerializerMixin):
     __tablename__ = "article_families"
@@ -119,6 +131,14 @@ class ArticleFamily(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"article_family('{self.name}')"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
 
 class Article(db.Model, SerializerMixin):
     __tablename__ = "articles"

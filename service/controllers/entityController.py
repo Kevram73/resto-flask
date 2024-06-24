@@ -44,10 +44,10 @@ class EntityController:
         result = self.service.update(Entity, id, data)
         if not result:
             abort(404)
-        return jsonify(result)
+        return redirect(url_for('admin_entities'))
 
     def delete_entity(self, id):
         result = self.service.delete(Entity, id)
         if not result:
             abort(404)
-        return jsonify({'result': True})
+        return redirect(url_for('admin_entities'))

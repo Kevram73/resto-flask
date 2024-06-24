@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from flask import abort, jsonify, render_template, request
+from flask import abort, jsonify, render_template, request, redirect, url_for
 from flask_login import current_user
 from service.models import Article
 from service.services.baseService import BaseService
@@ -11,7 +11,7 @@ class ArticleController:
         
     def get_articles(self):
         articles = self.service.get_all(Article)
-        return render_template("pages/admin/pages/articles/index.html", user=current_user.username, data=articles)
+        return render_template("pages/articles/index.html", user='current_user.username', data=articles)
 
     def get_article(self, id):
         article = self.service.get(Article, id)
@@ -20,32 +20,32 @@ class ArticleController:
         return jsonify(article)
 
     def create_article(self):
-        if not request.json or not 'libelle' in request.json or not 'fournisseur_id' in request.json:
+        if not request.form or not 'libelle' in request.form or not 'fournisseur_id' in request.form:
             abort(400)
-        status = request.json['status']
-        if status == 'true':
+        status = request.form['status']
+        if status == 'True':
             status = True
         else:
             status = False
         
         data = {
-            'libelle': request.json['libelle'],
-            'famille': request.json['famille'],
-            'prix_achat_unit': request.json['prix_achat_unit'],
-            'prix_vente_unit': request.json['prix_vente_unit'],
-            'quantity': request.json['quantity'],
-            'unite': request.json['unite'],
+            'libelle': request.form['libelle'],
+            'famille': request.form['famille'],
+            'prix_achat_unit': request.form['prix_achat_unit'],
+            'prix_vente_unit': request.form['prix_vente_unit'],
+            'quantity': request.form['quantity'],
+            'unite': request.form['unite'],
             'status': status,
-            'user_id': current_user.id,
-            'fournisseur_id': request.json['fournisseur_id'],
+            'user_id': 1, #current_user.id,
+            'fournisseur_id': request.form['fournisseur_id'],
             'created_at': datetime.now(timezone.utc),  # Optionally set defaults for fields not provided
             'updated_at': datetime.now(timezone.utc)
         }
         article = self.service.create(Article, data)
-        return jsonify(article), 201
+        return redirect(url_for('admin_articles'))
 
     def update_article(self, id):
-        if not request.json:
+        if not request.form:
             abort(400)
         article = self.service.get(Article, id)
         if not article:
@@ -53,33 +53,34 @@ class ArticleController:
         data = {}
 
         if data:
-            if 'libelle' in request.json:
-                data['libelle'] = request.json['libelle']
-            if 'famille' in request.json:
-                data['famille'] = request.json['famille']
-            if 'prix_achat_unit' in request.json:
-                data['prix_achat_unit'] = request.json['prix_achat_unit']
-            if 'prix_vente_unit' in request.json:
-                data['prix_vente_unit'] = request.json['prix_vente_unit']
-            if 'quantity' in request.json:
-                data['quantity'] = request.json['quantity']
-            if 'unite' in request.json:
-                data['unite'] = request.json['unite']
-            if 'fournisseur_id' in request.json:
-                data['fournisseur_id'] = request.json['fournisseur_id']
+            if 'libelle' in request.form:
+                data['libelle'] = request.form['libelle']
+            if 'famille' in request.form:
+                data['famille'] = request.form['famille']
+            if 'prix_achat_unit' in request.form:
+                data['prix_achat_unit'] = request.form['prix_achat_unit']
+            if 'prix_vente_unit' in request.form:
+                data['prix_vente_unit'] = request.form['prix_vente_unit']
+            if 'quantity' in request.form:
+                data['quantity'] = request.form['quantity']
+            if 'unite' in request.form:
+                data['unite'] = request.form['unite']
+            if 'fournisseur_id' in request.form:
+                data['fournisseur_id'] = request.form['fournisseur_id']
 
-            if 'status' in request.json and request.json['status'] == 'true':
+            if 'status' in request.form and request.form['status'] == 'True':
                 data['status'] = True
-            elif 'status' in request.json and request.json['status'] == 'false':
+            elif 'status' in request.form and request.form['status'] == 'False':
                 data['status'] = False
-            data['updated_at'] = datetime.now(timezone.utc)
+            if data:
+                data['updated_at'] = datetime.now(timezone.utc)
         result = self.service.update(Article, id, data)
         if not result:
             abort(404)
-        return jsonify(result)
+        return redirect(url_for('admin_articles'))
 
     def delete_article(self, id):
         result = self.service.delete(Article, id)
         if not result:
             abort(404)
-        return jsonify({'result': True})
+        return redirect(url_for('admin_articles'))
