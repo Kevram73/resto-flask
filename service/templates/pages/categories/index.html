@@ -3,11 +3,11 @@
 {% block content %}
 <main class="w-full flex-grow p-6">
     <div class="text-xl pb-0 items-center">
-        <h1 class="text-3xl text-black pb-0">Gestion <small style="font-size: 15px;">Tables</small></h1>
+        <h1 class="text-3xl text-black pb-0">Gestion <small style="font-size: 15px;">Catégories</small></h1>
         <div class="flex items-center text-gray-900 whitespace-no-wrap">
 
             <button data-modal-target="crud-modal-add" data-modal-toggle="crud-modal-add"
-                class="text-white my-2 inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600"
+                class="text-white my-2 inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 type="button">
                 <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg">
@@ -15,7 +15,7 @@
                         d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                         clip-rule="evenodd"></path>
                 </svg>
-                Table
+                Catégorie
             </button>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <hr class="my-1 mt-3 bg-gray-400 text-gray-600 border-b-1 border-gray-500">
         <div class="text-xl pb-0 items-center">
             <p>
-                <i class="fas fa-list mr-3"></i> Gestion Tables
+                <i class="fas fa-list mr-3"></i> Gestion Catégories
             </p>
 
         </div>
@@ -34,19 +34,15 @@
                 <tr>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Nom de table
+                        Nom
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Section
+                        Type de Catégorie
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Capacité
-                    </th>
-                    <th
-                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Disponibilité
+                        Créer le
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -60,57 +56,38 @@
             </thead>
             <tbody>
                 {% if data %}
-                {% for table in data %}
+                {% for category in data %}
                 <tr>
                     <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                         <div class="flex items-center">
                             <div class="ml-3">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ table.table_name }}
+                                    {{ category.name }}
                                 </p>
                             </div>
                         </div>
                     </td>
                     <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
-                        {% if entities %}
-                        {% for entity in entities %}
-                        {% if entity.id == table.entity_id %}
-                        <p class="text-gray-900 whitespace-no-wrap">
-                            {{ entity.name }}
-                        </p>
+                        {% if typeCategories %}
+                        {% for typeCategory in typeCategories %}
+                        {% if typeCategory.id==category.type_category_id %}
+                        <p class="text-gray-900 whitespace-no-wrap">{{typeCategory.name}}</p>
                         {% endif %}
                         {% endfor %}
                         {% endif %}
                     </td>
                     <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
-                        <div class="flex items-center">
-                            <div class="ml-3">
-                                <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ table.capacity }}
-                                </p>
-                            </div>
-                        </div>
+                        <p class="text-gray-900 whitespace-no-wrap">
+                            {{ category.created_at.strftime("%B %d, %Y") }}
+                        </p>
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {% if table.available == True %}
-                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                            <span class="relative">Disponible</span>
-                        </span>
-                        {% elif table.available == False %}
-                        <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                            <span class="relative">Indisponible</span>
-                        </span>
-                        {% endif %}
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {% if table.active == True %}
+                        {% if category.active == True %}
                         <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                             <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                             <span class="relative">Activé</span>
                         </span>
-                        {% elif table.active == False %}
+                        {% elif category.active == False %}
                         <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                             <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
                             <span class="relative">Inactivé</span>
@@ -119,8 +96,8 @@
                     </td>
                     <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                         <p class="text-gray-900 whitespace-no-wrap">
-                            <button data-modal-target="crud-modal-edit-{{table.id}}"
-                                data-modal-toggle="crud-modal-edit-{{table.id}}"
+                            <button data-modal-target="crud-modal-edit-{{category.id}}"
+                                data-modal-toggle="crud-modal-edit-{{category.id}}"
                                 class="middle center p-1 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                                     stroke="currentColor" stroke-width="2">
@@ -128,7 +105,7 @@
                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
                             </button>
-                            <a href="{{url_for('admin_tables_delete',id=table.id)}}">
+                            <a href="{{url_for('admin_categories_delete',id=category.id)}}">
                                 <button onclick="return confirm('Are you sure you want to delete this article?');"
                                     class="middle center p-1 bg-red-500 rounded-xl hover:rounded-3xl hover:bg-red-600 transition-all duration-300 text-white">
                                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +120,7 @@
                     </td>
                 </tr>
                 <!-- Main modal -->
-                <div id="crud-modal-edit-{{table.id}}" tabindex="-1" aria-hidden="true"
+                <div id="crud-modal-edit-{{category.id}}" tabindex="-1" aria-hidden="true"
                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-md max-h-full">
                         <!-- Modal content -->
@@ -151,11 +128,11 @@
                             <!-- Modal header -->
                             <div class="flex items-center justify-between mb-0 p-4 md:p-5 border-b rounded-t">
                                 <h3 class="text-lg font-semibold text-gray-900">
-                                    Modifier la Table
+                                    Modifier la Catégorie
                                 </h3>
                                 <button type="button"
                                     class="text-gray-400 px-2 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
-                                    data-modal-toggle="crud-modal-edit-{{table.id}}">
+                                    data-modal-toggle="crud-modal-edit-{{category.id}}">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                         fill="none" viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -165,61 +142,42 @@
                                 </button>
                             </div>
                             <!-- Modal body -->
-                            <form action="{{url_for('admin_tables_update',id=table.id)}}" method="POST"
+                            <form action="{{url_for('admin_categories_update',id=category.id)}}" method="POST"
                                 enctype="multipart/form-data" class="p-4 md:p-5">
-                                <div class="grid gap-4 mx-5 mb-4 mb-4 grid-cols-4">
-                                    <div class="col-span-4">
-                                        <label for="table_name" class="block mb-2 text-sm font-medium text-gray-900">Nom
-                                            de table</label>
-                                        <input type="text" name="table_name" value="{{table.table_name}}"
-                                            id="table_name"
+                                <div class="grid gap-4  mx-5 mb-4 grid-cols-2">
+                                    <div class="col-span-2">
+                                        <label for="name"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Nom</label>
+                                        <input type="text" name="name" id="name" value="{{category.name}}"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                            placeholder="Nom de la table" required="">
+                                            placeholder="Nom du client" required="">
                                     </div>
-                                    <div class="col-span-4">
-                                        <label for="capacity"
-                                            class="block mb-2 text-sm font-medium text-gray-900">Nombre de place</label>
-                                        <input type="number" name="capacity" value="{{table.capacity}}" id="capacity"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                            placeholder="Nombre de place" required="">
-                                    </div>
-                                    <div class="col-span-4 sm:col-span-2">
-                                        <label for="available"
-                                            class="block mb-2 text-sm font-medium text-gray-900">Disponibolité</label>
-                                        <select id="available" name="available" id="available"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                            <option selected="">Selectionner l'état</option>
-                                            <option value="True" {% if table.available==True %}selected{% endif %}>
-                                                Disponible</option>
-                                            <option value="False" {% if table.available==False %}selected{% endif %}>
-                                                Indisponible</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-span-4 sm:col-span-2">
-                                        <label for="active"
-                                            class="block mb-2 text-sm font-medium text-gray-900">Statut</label>
-                                        <select id="active" name="active" id="active"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                            <option selected="">Selectionner l'état</option>
-                                            <option value="True" {% if table.active==True %}selected{% endif %}>Active
-                                            </option>
-                                            <option value="False" {% if table.active==False %}selected{% endif %}>
-                                                Inactive</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-span-4 sm:col-span-2">
-                                        <label for="entity_id"
-                                            class="block mb-2 text-sm font-medium text-gray-900">Section</label>
-                                        <select id="entity_id" name="entity_id"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                            {% if entities %}
-                                            {% for entity in entities %}
-                                            <option value="{{entity.id}}" {% if table.entity_id==entity.id %}selected{%
-                                                endif %}>{{entity.name}}</option>
-                                            {% endfor %}
-                                            {% endif %}
-                                        </select>
-                                    </div>
+                                </div>
+                                <div class="col-span-4 mx-5 mb-4 sm:col-span-2">
+                                    <label for="type_category_id"
+                                        class="block mb-2 text-sm font-medium text-gray-900">Type de catégorie</label>
+                                    <select id="type_category_id" name="type_category_id"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                        {% if typeCategories %}
+                                        {% for typeCategory in typeCategories %}
+                                        <option value="{{typeCategory.id}}" {% if
+                                            category.type_category_id==typeCategory.id %}selected{% endif %}>
+                                            {{typeCategory.name}}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                                <div class="col-span-4 mx-5 mb-4 sm:col-span-2">
+                                    <label for="active"
+                                        class="block mb-2 text-sm font-medium text-gray-900">Statut</label>
+                                    <select id="active" name="active" id="active"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                        <option selected="">Selectionner l'état</option>
+                                        <option value="True" {% if category.active==True %}selected{% endif %}>Active
+                                        </option>
+                                        <option value="False" {% if category.active==False %}selected{% endif %}>
+                                            Inactive</option>
+                                    </select>
                                 </div>
                                 <button type="submit"
                                     class="text-white mx-5 mb-5 inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -239,7 +197,7 @@
                 {% endfor %}
                 {% else %}
                 <tr>
-                    <td colspan="3" style="text-align: center;">Aucune table disponible</td>
+                    <td colspan="3" style="text-align: center;">Aucun reste disponible</td>
                 </tr>
                 {% endif %}
             </tbody>
@@ -255,7 +213,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                     <h3 class="text-lg font-semibold text-gray-900">
-                        Créer Une Nouvelle Table
+                        Créer Une Nouvelle Catégorie
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -269,54 +227,37 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="{{url_for('admin_tables_add')}}" method="POST" enctype="multipart/form-data"
+                <form action="{{url_for('admin_categories_add')}}" method="POST" enctype="multipart/form-data"
                     class="p-4 md:p-5">
-                    <div class="grid gap-4 mb-4 grid-cols-4">
-                        <div class="col-span-4">
-                            <label for="table_name" class="block mb-2 text-sm font-medium text-gray-900">Nom
-                                de table</label>
-                            <input type="text" name="table_name" id="table_name"
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nom</label>
+                            <input type="text" name="name" id="name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                placeholder="Nom de la table" required="">
+                                placeholder="Nom du client" required="">
                         </div>
-                        <div class="col-span-4">
-                            <label for="capacity" class="block mb-2 text-sm font-medium text-gray-900">Nombre
-                                de place</label>
-                            <input type="number" name="capacity" id="capacity"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                placeholder="Nombre de place" required="">
-                        </div>
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="available"
-                                class="block mb-2 text-sm font-medium text-gray-900">Disponibolité</label>
-                            <select id="available" name="available"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                <option selected="">Selectionner un état</option>
-                                <option value="True">Disponible</option>
-                                <option value="False">Indisponible</option>
-                            </select>
-                        </div>
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="active" class="block mb-2 text-sm font-medium text-gray-900">Statut</label>
-                            <select id="active" name="active"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                <option selected="">Selectionner un état</option>
-                                <option value="True">Active</option>
-                                <option value="False">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="col-span-4 sm:col-span-2">
-                            <label for="entity_id" class="block mb-2 text-sm font-medium text-gray-900">Section</label>
-                            <select id="entity_id" name="entity_id"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                <option selected="">Selectionner la section</option>
-                                {% if entities %}
-                                {% for entity in entities %}
-                                <option value="{{entity.id}}">{{entity.name}}</option>
-                                {% endfor %}
-                                {% endif %}
-                            </select>
-                        </div>
+                    </div>
+                    <div class="col-span-4 sm:col-span-2 mb-4">
+                        <label for="type_category_id" class="block mb-2 text-sm font-medium text-gray-900">Type de
+                            catégorie</label>
+                        <select id="type_category_id" name="type_category_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                            <option selected="">Selectionner type de catégorie</option>
+                            {% if typeCategories %}
+                            {% for typeCategory in typeCategories %}
+                            <option value="{{typeCategory.id}}">{{typeCategory.name}}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="col-span-4 sm:col-span-2 mb-4">
+                        <label for="active" class="block mb-2 text-sm font-medium text-gray-900">Statut</label>
+                        <select id="active" name="active"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                            <option selected="">Selectionner un état</option>
+                            <option value="True">Active</option>
+                            <option value="False">Inactive</option>
+                        </select>
                     </div>
                     <button type="submit"
                         class="text-white inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">

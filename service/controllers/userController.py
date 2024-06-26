@@ -47,8 +47,9 @@ class UserController:
                 'group_id': request.form['group_id'],
                 'password': flask_bcrypt.generate_password_hash("password")
             }
-            self.service.create(User, data)
-            return redirect(url_for('admin_users'))
+            user = self.service.create(User, data)
+            if user:
+                return redirect(url_for('admin_users'))
         return render_template("pages/users/new.html", user='current_user.username', groups=groups)
 
     def update_user(self, id):
@@ -71,8 +72,9 @@ class UserController:
             data['updated_at'] = datetime.now(timezone.utc)
             
             if data:
-                self.service.update(User, id, data)
-                return redirect(url_for('admin_users'))
+                result = self.service.update(User, id, data)
+                if result:
+                    return redirect(url_for('admin_users'))
         return render_template("pages/users/edit.html", user='current_user.username', data=user, groups=groups)
 
 

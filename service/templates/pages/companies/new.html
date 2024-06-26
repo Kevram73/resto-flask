@@ -11,9 +11,9 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                         <h3 class="text-lg font-semibold text-gray-900">
-                            Créer un Utilisateur
+                            Créer une entreprise
                         </h3>
-                        <a href="{{url_for('admin_users')}}">
+                        <a href="{{url_for('admin_companies')}}">
                             <button type="button"
                                 class="text-white inline-flex items-center bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -26,70 +26,55 @@
                         </a>
                     </div>
                     <!-- Modal body -->
-                    <form action="{{url_for('admin_users_add')}}" method="POST" enctype="multipart/form-data"
+                    <form action="{{url_for('admin_companies_add')}}" method="POST" enctype="multipart/form-data"
                         class="p-4 md:p-5">
                         <div class="grid gap-4 mb-4 grid-cols-4">
                             <div class="col-span-4">
-                                <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Nom
-                                    d'utilisateur</label>
-                                <input type="text" name="username" id="username"
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nom</label>
+                                <input type="text" name="name" id="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="Nom d'utilisateur" required="">
+                                    placeholder="Nom de l'entreprise" required="">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="gender" class="block mb-2 text-sm font-medium text-gray-900">Sexe</label>
-                                <select id="gender" name="gender"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected="">Selectionner le sexe</option>
-                                    <option value="Masculin">Masculin</option>
-                                    <option value="Féminin">Féminin</option>
-                                </select>
+                                <label for="service_charge_value"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Charge de service</label>
+                                <input type="number" name="service_charge_value" id="service_charge_value"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    min=0.0 placeholder="0.0" required="">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="group_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Groupe</label>
-                                <select id="group_id" name="group_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected="">Selectionner le groupe</option>
-                                    {% if groups %}
-                                    {% for group in groups %}
-                                    <option value="{{group.id}}">{{group.name}}</option>
-                                    {% endfor %}
-                                    {% endif %}
-                                </select>
+                                <label for="vat_charge_value" class="block mb-2 text-sm font-medium text-gray-900">Vat
+                                    Charge value</label>
+                                <input type="number" name="vat_charge_value" id="vat_charge_value"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    min=0.0 placeholder="0.0" required="">
                             </div>
                             <div class="col-span-4">
-                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Numéro de
-                                    Téléphone</label>
-                                <div class="relative w-full">
-                                    <input type="text" id="phone" name="phone"
-                                        aria-describedby="helper-text-explanation"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                                        pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" placeholder="99 99 99 99"
-                                        required />
-                                </div>
+                                <label for="address"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Adresse</label>
+                                <input type="text" name="address" id="address"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    placeholder="Adresse de l'entreprise" required="">
                             </div>
                             <div class="col-span-4">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                                <input type="email" name="email" id="email"
+                                <label for="phone"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Téléphone</label>
+                                <input type="text" name="phone" id="phone" aria-describedby="helper-text-explanation"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="exemple@gmail.com" required="">
+                                    pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" placeholder="99 99 99 99" required>
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Mots
-                                    de passe</label>
-                                <input type="password" name="password" id="password"
+                                <label for="country" class="block mb-2 text-sm font-medium text-gray-900">Pays</label>
+                                <input type="text" name="country" id="country"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="•••••••••" required="">
+                                    placeholder="Pays" required="">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="confirm_password"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Confirmez le
-                                    mots
-                                    de passe</label>
-                                <input type="password" id="confirm_password"
+                                <label for="currency" class="block mb-2 text-sm font-medium text-gray-900">Devise
+                                    (Monnaie)</label>
+                                <input type="text" name="currency" id="currency"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="•••••••••" required />
+                                    placeholder="La devise du pays" required="">
                             </div>
                         </div>
                         <button type="submit"

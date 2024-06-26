@@ -3,9 +3,9 @@
 {% block content %}
 <main class="w-full flex-grow p-6">
     <div class="text-xl pb-0 items-center">
-        <h1 class="text-3xl text-black pb-0">Gestion <small style="font-size: 15px;">Articles</small></h1>
+        <h1 class="text-3xl text-black pb-0">Gestion <small style="font-size: 15px;">Entreprises</small></h1>
         <div class="flex items-center text-gray-900 whitespace-no-wrap">
-            <a href="{{url_for('admin_articles_add')}}">
+            <a href="{{url_for('admin_companies_add')}}">
                 <button
                     class="text-white my-2 inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                     type="button">
@@ -15,7 +15,7 @@
                             d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                             clip-rule="evenodd"></path>
                     </svg>
-                    Article
+                    Entreprise
                 </button>
             </a>
         </div>
@@ -24,7 +24,7 @@
         <hr class="my-1 mt-3 bg-gray-400 text-gray-600 border-b-1 border-gray-500">
         <div class="text-xl pb-0 items-center">
             <p>
-                <i class="fas fa-list mr-3"></i> Gestion Articles
+                <i class="fas fa-list mr-3"></i> Gestion Entreprise
             </p>
 
         </div>
@@ -36,31 +36,31 @@
                 <tr>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Libelle
+                        Nom
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Famille
+                        Charge de service
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Prix d'achat (PU)
+                        Adresse
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Prix de vente (PU)
+                        Téléphone
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Quantité
+                        Pays
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Fournisseur
+                        Dévise
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        Statut
+                        Créer le
                     </th>
                     <th
                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -70,13 +70,13 @@
             </thead>
             <tbody>
                 {% if data %}
-                {% for article in data %}
+                {% for company in data %}
                 <tr>
                     <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                         <div class="flex items-center">
                             <div class="ml-3">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ article.libelle }}
+                                    {{ company.name }}
                                 </p>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                         <div class="flex items-center">
                             <div class="ml-3">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ article.famille }}
+                                    {{ company.service_charge_value }}
                                 </p>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                         <div class="flex items-center">
                             <div class="ml-3">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ article.prix_achat_unit }}
+                                    {{ company.address }}
                                 </p>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                         <div class="flex items-center">
                             <div class="ml-3">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ article.prix_vente_unit }}
+                                    {{ company.phone }}
                                 </p>
                             </div>
                         </div>
@@ -112,38 +112,28 @@
                         <div class="flex items-center">
                             <div class="ml-3">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ article.quantity }}
+                                    {{ company.country }}
                                 </p>
                             </div>
                         </div>
                     </td>
                     <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
-                        {% if fournisseurs %}
-                        {% for fournisseur in fournisseurs %}
-                        {% if fournisseur.id == article.fournisseur_id %}
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ company.currency }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                         <p class="text-gray-900 whitespace-no-wrap">
-                            {{ fournisseur.name }}
+                            {{ company.created_at.strftime("%B %d, %Y") }}
                         </p>
-                        {% endif %}
-                        {% endfor %}
-                        {% endif %}
-                    </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {% if article.status == True %}
-                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                            <span class="relative">Disponible</span>
-                        </span>
-                        {% elif article.status == False %}
-                        <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                            <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
-                            <span class="relative">Indisponible</span>
-                        </span>
-                        {% endif %}
                     </td>
                     <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
                         <p class="text-gray-900 whitespace-no-wrap">
-                            <a href="{{url_for('admin_articles_update',id=article.id)}}">
+                            <a href="{{url_for('admin_companies_update',id=company.id)}}">
                                 <button
                                     class="middle center p-1 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
@@ -153,7 +143,7 @@
                                     </svg>
                                 </button>
                             </a>
-                            <a href="{{url_for('admin_articles_delete',id=article.id)}}">
+                            <a href="{{url_for('admin_companies_delete',id=company.id)}}">
                                 <button onclick="return confirm('Are you sure you want to delete this article?');"
                                     class="middle center p-1 bg-red-500 rounded-xl hover:rounded-3xl hover:bg-red-600 transition-all duration-300 text-white">
                                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +160,7 @@
                 {% endfor %}
                 {% else %}
                 <tr>
-                    <td colspan="3" style="text-align: center;">Aucun article disponible</td>
+                    <td colspan="3" style="text-align: center;">Aucune entreprise disponible</td>
                 </tr>
                 {% endif %}
             </tbody>

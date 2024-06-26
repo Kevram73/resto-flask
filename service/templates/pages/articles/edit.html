@@ -11,9 +11,9 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                         <h3 class="text-lg font-semibold text-gray-900">
-                            Créer un Utilisateur
+                            Modifier l'Utilisateur
                         </h3>
-                        <a href="{{url_for('admin_users')}}">
+                        <a href="{{url_for('admin_articles')}}">
                             <button type="button"
                                 class="text-white inline-flex items-center bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -26,70 +26,72 @@
                         </a>
                     </div>
                     <!-- Modal body -->
-                    <form action="{{url_for('admin_users_add')}}" method="POST" enctype="multipart/form-data"
-                        class="p-4 md:p-5">
+                    <form action="{{url_for('admin_articles_update',id=article.id)}}" method="POST"
+                        enctype="multipart/form-data" class="p-4 md:p-5">
                         <div class="grid gap-4 mb-4 grid-cols-4">
                             <div class="col-span-4">
-                                <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Nom
-                                    d'utilisateur</label>
-                                <input type="text" name="username" id="username"
+                                <label for="libelle"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Libelle</label>
+                                <input type="text" name="libelle" id="libelle" value="{{article.libelle}}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="Nom d'utilisateur" required="">
+                                    placeholder="Nom de l'article">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="gender" class="block mb-2 text-sm font-medium text-gray-900">Sexe</label>
-                                <select id="gender" name="gender"
+                                <label for="famille" class="block mb-2 text-sm font-medium text-gray-900">Famille
+                                    d'article</label>
+                                <select id="famille" name="famille"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected="">Selectionner le sexe</option>
-                                    <option value="Masculin">Masculin</option>
-                                    <option value="Féminin">Féminin</option>
-                                </select>
-                            </div>
-                            <div class="col-span-4 sm:col-span-2">
-                                <label for="group_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Groupe</label>
-                                <select id="group_id" name="group_id"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected="">Selectionner le groupe</option>
-                                    {% if groups %}
-                                    {% for group in groups %}
-                                    <option value="{{group.id}}">{{group.name}}</option>
+                                    <option selected="">Selectionner la famille</option>
+                                    {% if families %}
+                                    {% for family in families %}
+                                    <option value="{{family.id}}" {% if article.famille==family.id %}selected{% endif
+                                        %}>{{family.name}}</option>
                                     {% endfor %}
                                     {% endif %}
                                 </select>
                             </div>
-                            <div class="col-span-4">
-                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Numéro de
-                                    Téléphone</label>
-                                <div class="relative w-full">
-                                    <input type="text" id="phone" name="phone"
-                                        aria-describedby="helper-text-explanation"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
-                                        pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}" placeholder="99 99 99 99"
-                                        required />
-                                </div>
-                            </div>
-                            <div class="col-span-4">
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                                <input type="email" name="email" id="email"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="exemple@gmail.com" required="">
+                            <div class="col-span-4 sm:col-span-2">
+                                <label for="fournisseur_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Fournisseur</label>
+                                <select id="fournisseur_id" name="fournisseur_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                    <option selected="">Selectionner le fournisseur</option>
+                                    {% if fournisseurs %}
+                                    {% for fournisseur in fournisseurs %}
+                                    <option value="{{fournisseur.id}}" {% if article.fournisseur_id==fournisseur.id
+                                        %}selected{% endif %}>{{fournisseur.name}}</option>
+                                    {% endfor %}
+                                    {% endif %}
+                                </select>
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Mots
-                                    de passe</label>
-                                <input type="password" name="password" id="password"
+                                <label for="prix_achat_unit" class="block mb-2 text-sm font-medium text-gray-900">Prix
+                                    d'achat (PU)</label>
+                                <input type="number" name="prix_achat_unit" id="prix_achat_unit"
+                                    value="{{article.prix_achat_unit}}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="•••••••••" required="">
+                                    min=0.0 required="">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="confirm_password"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Confirmez le
-                                    mots
-                                    de passe</label>
-                                <input type="password" id="confirm_password"
+                                <label for="prix_vente_unit" class="block mb-2 text-sm font-medium text-gray-900">Prix
+                                    de vente (PU)</label>
+                                <input type="number" name="prix_vente_unit" id="prix_vente_unit"
+                                    value="{{article.prix_vente_unit}}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="•••••••••" required />
+                                    min=0.0>
+                            </div>
+                            <div class="col-span-4 sm:col-span-2">
+                                <label for="quantity"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Quantité</label>
+                                <input type="number" name="quantity" id="quantity" value="{{article.quantity}}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                    min=0.0 placeholder="0.0">
+                            </div>
+
+                            <div class="col-span-4 sm:col-span-2">
+                                <label for="unite" class="block mb-2 text-sm font-medium text-gray-900">Unité</label>
+                                <input type="number" name="unite" id="unite" value="{{article.unite}}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             </div>
                         </div>
                         <button type="submit"

@@ -9,6 +9,11 @@ from service.controllers.tableController import TableController
 from service.controllers.fournisseurController import FournisseurController
 from service.controllers.userEntityController import UserEntityController
 from service.controllers.articleFamilyController import ArticleFamilyController
+from service.controllers.articleController import ArticleController
+from service.controllers.casheerController import CasheerController
+from service.controllers.typeCategoryController import TypeCategoryController
+from service.controllers.categoryController import CategoryController
+from service.controllers.companyController import CompanyController
 
 from service.models import User, Article
 import flask_bcrypt
@@ -28,6 +33,11 @@ authController = AuthController()
 fournisseurController = FournisseurController()
 userEntityController = UserEntityController()
 articleFamilyController = ArticleFamilyController()
+articleController = ArticleController()
+casheerController = CasheerController()
+typeCategoryController = TypeCategoryController()
+categoryController = CategoryController()
+companyController = CompanyController()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -225,3 +235,133 @@ def admin_articleFamilies_update(id):
 @app.route('/admin/articleFamilies/delete/<int:id>', methods=['GET','POST'])
 def admin_articleFamilies_delete(id):
     return articleFamilyController.delete_articleFamily(id)
+
+# Article routes
+#@login_required
+@app.route('/admin/articles', methods=['GET', 'POST'])
+def admin_articles():
+    return articleController.get_articles()
+
+#@login_required
+@app.route('/admin/articles/<int:id>', methods=['GET'])
+def admin_articles_get(id):
+    return articleController.get_article(id)
+
+#@login_required
+@app.route('/admin/articles/add', methods=['GET', 'POST'])
+def admin_articles_add():
+    return articleController.create_article()
+
+#@login_required
+@app.route('/admin/articles/edit/<int:id>', methods=['GET', 'POST'])
+def admin_articles_update(id):
+    return articleController.update_article(id)
+
+#@login_required
+@app.route('/admin/articles/delete/<int:id>', methods=['GET','POST'])
+def admin_articles_delete(id):
+    return articleController.delete_article(id)
+
+# Casheer routes
+#@login_required
+@app.route('/admin/casheers', methods=['GET', 'POST'])
+def admin_casheers():
+    return casheerController.get_casheers()
+
+#@login_required
+@app.route('/admin/casheers/<int:id>', methods=['GET'])
+def admin_casheers_get(id):
+    return casheerController.get_casheer(id)
+
+#@login_required
+@app.route('/admin/casheers/add', methods=['GET', 'POST'])
+def admin_casheers_add():
+    return casheerController.create_casheer()
+
+#@login_required
+@app.route('/admin/casheers/edit/<int:id>', methods=['GET', 'POST'])
+def admin_casheers_update(id):
+    return casheerController.update_casheer(id)
+
+#@login_required
+@app.route('/admin/casheers/delete/<int:id>', methods=['GET','POST'])
+def admin_casheers_delete(id):
+    return casheerController.delete_casheer(id)
+
+# TypeCategory routes
+#@login_required
+@app.route('/admin/typeCategories', methods=['GET', 'POST'])
+def admin_typeCategories():
+    return typeCategoryController.get_typeCategories()
+
+#@login_required
+@app.route('/admin/casheers/<int:id>', methods=['GET'])
+def admin_typeCategories_get(id):
+    return typeCategoryController.get_typeCategory(id)
+
+#@login_required
+@app.route('/admin/typeCategories/add', methods=['GET', 'POST'])
+def admin_typeCategories_add():
+    return typeCategoryController.create_typeCategory()
+
+#@login_required
+@app.route('/admin/typeCategories/edit/<int:id>', methods=['GET', 'POST'])
+def admin_typeCategories_update(id):
+    return typeCategoryController.update_typeCategory(id)
+
+#@login_required
+@app.route('/admin/typeCategories/delete/<int:id>', methods=['GET','POST'])
+def admin_typeCategories_delete(id):
+    return typeCategoryController.delete_typeCategory(id)
+
+# Category routes
+#@login_required
+@app.route('/admin/categories', methods=['GET', 'POST'])
+def admin_categories():
+    return categoryController.get_categories()
+
+#@login_required
+@app.route('/admin/categories/<int:id>', methods=['GET'])
+def admin_categories_get(id):
+    return categoryController.get_category(id)
+
+#@login_required
+@app.route('/admin/categories/add', methods=['GET', 'POST'])
+def admin_categories_add():
+    return categoryController.create_category()
+
+#@login_required
+@app.route('/admin/categories/edit/<int:id>', methods=['GET', 'POST'])
+def admin_categories_update(id):
+    return categoryController.update_category(id)
+
+#@login_required
+@app.route('/admin/categories/delete/<int:id>', methods=['GET','POST'])
+def admin_categories_delete(id):
+    return categoryController.delete_category(id)
+
+# Company routes
+#@login_required
+@app.route('/admin/companies', methods=['GET', 'POST'])
+def admin_companies():
+    return companyController.get_companies()
+
+#@login_required
+@app.route('/admin/companies/<int:id>', methods=['GET'])
+def admin_companies_get(id):
+    return companyController.get_company(id)
+
+#@login_required
+@app.route('/admin/companies/add', methods=['GET', 'POST'])
+def admin_companies_add():
+    return companyController.create_company()
+
+#@login_required
+@app.route('/admin/companies/edit/<int:id>', methods=['GET', 'POST'])
+def admin_companies_update(id):
+    return companyController.update_company(id)
+
+#@login_required
+@app.route('/admin/companies/delete/<int:id>', methods=['GET','POST'])
+def admin_companies_delete(id):
+    return companyController.delete_company(id)

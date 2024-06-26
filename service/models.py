@@ -163,6 +163,22 @@ class Article(db.Model, SerializerMixin):
     def __repr__(self):
         return f"article('{self.libelle}')"
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'libelle': self.libelle,
+            'famille': self.famille,
+            'prix_achat_unit': self.prix_achat_unit,
+            'prix_vente_unit': self.prix_vente_unit,
+            'quantity': self.quantity,
+            'unite': self.unite,
+            'status': self.status,
+            'user_id': self.user_id,
+            'fournisseur_id': self.fournisseur_id,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
+    
 class Casheer(db.Model, SerializerMixin):
     __tablename__ = "casheers"
     id = db.Column(db.Integer, primary_key=True)
@@ -173,6 +189,14 @@ class Casheer(db.Model, SerializerMixin):
     def __repr__(self):
         return f"casheer('{self.name}')"
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'balance': self.balance,
+            'created_at': self.created_at,
+        }
+    
 class TypeCategory(db.Model, SerializerMixin):
     __tablename__ = "type_categories"
     id = db.Column(db.Integer, primary_key=True)
@@ -181,6 +205,13 @@ class TypeCategory(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f"type_category('{self.name}')"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'created_at': self.created_at,
+        }
 
 class Category(db.Model, SerializerMixin):
     __tablename__ = "categories"
@@ -194,6 +225,16 @@ class Category(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f"category('{self.name}')"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'type_category_id': self.type_category_id,
+            'active': self.active,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at,
+        }
 
 
 class Company(db.Model, SerializerMixin):
@@ -210,7 +251,21 @@ class Company(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
     def __repr__(self):
-        return f"article('{self.title}')"
+        return f"article('{self.name}')"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'service_charge_value': self.service_charge_value,
+            'vat_charge_value': self.vat_charge_value,
+            'address': self.address,
+            'phone': self.phone,
+            'country': self.country,
+            'currency': self.currency,
+            'updated_at': self.updated_at,
+            'created_at': self.created_at,
+        }
 
 
 class Depense(db.Model, SerializerMixin):
