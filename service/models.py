@@ -236,7 +236,6 @@ class Category(db.Model, SerializerMixin):
             'updated_at': self.updated_at,
         }
 
-
 class Company(db.Model, SerializerMixin):
     __tablename__ = "companies"
     id = db.Column(db.Integer, primary_key=True)
@@ -266,7 +265,6 @@ class Company(db.Model, SerializerMixin):
             'updated_at': self.updated_at,
             'created_at': self.created_at,
         }
-
 
 class Depense(db.Model, SerializerMixin):
     __tablename__ = "depenses"
@@ -310,6 +308,18 @@ class Product(db.Model, SerializerMixin):
     def __repr__(self):
         return f"<Product {self.name}>"
     
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'category_id': self.category_id,
+            'group_id': self.group_id,
+            'price': self.price,
+            'description': self.description,
+            'image': self.image,
+            'active': self.active
+        }
+    
 class Order(db.Model, SerializerMixin):
     __tablename__ = "orders"
 
@@ -333,8 +343,7 @@ class Order(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f"<Order {self.bill_no}>"
-    
-
+       
 class OrderItem(db.Model, SerializerMixin):
     __tablename__ = "order_items"
 
@@ -351,7 +360,7 @@ class OrderItem(db.Model, SerializerMixin):
     
     def __repr__(self):
         return f"<OrderItem {self.id} for Order {self.order_id}>"
-
+    
 class Stock(db.Model, SerializerMixin):
     __tablename__ = "stocks"
 
@@ -364,3 +373,13 @@ class Stock(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f"<Stock {'in' if self.in_out else 'out'} {self.quantity} units>"
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'article_id': self.article_id,
+            'quantity': self.quantity,
+            'in_out': self.in_out,
+            'fournisseur_id': self.fournisseur_id,
+            'created_at': self.created_at,
+        }

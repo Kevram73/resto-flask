@@ -1,0 +1,458 @@
+{% extends './layouts/base_admin.html' %}
+
+{% block content %}
+<main class="w-full flex-grow p-6">
+    <div class="text-xl pb-0 items-center">
+        <h1 class="text-3xl text-black pb-0">Gestion <small style="font-size: 15px;">Stocks</small></h1>
+        <div class="flex items-center text-gray-900 whitespace-no-wrap">
+
+            <button data-modal-target="crud-modal-add" data-modal-toggle="crud-modal-add"
+                class="text-white my-2 inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-400 dark:hover:bg-blue-500 dark:focus:ring-blue-600"
+                type="button">
+                <svg class="me-1 -ms-1 w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16h13M4 16l4-4m-4 4 4 4M20 8H7m13 0-4 4m4-4-4-4" />
+                </svg>
+
+                Stock
+            </button>
+        </div>
+    </div>
+    <div class="w-full mt-0">
+        <hr class="my-1 mt-3 bg-gray-400 text-gray-600 border-b-1 border-gray-500">
+        <div class="text-xl pb-0 items-center">
+            <p>
+                <i class="fas fa-list mr-3"></i> Stocks d'article
+            </p>
+
+        </div>
+    </div>
+    <div class="bg-white overflow-auto">
+        <table class="min-w-full leading-normal">
+            <thead>
+                <tr>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Libelle
+                    </th>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Quantité
+                    </th>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Modifier le
+                    </th>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if articles %}
+                {% for article in articles %}
+                <tr>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ article.libelle }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ article.quantity }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ article.updated_at.strftime("%B %d, %Y") }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">
+                            <button data-modal-target="crud-modal-edit-{{article.id}}"
+                                data-modal-toggle="crud-modal-edit-{{article.id}}"
+                                class="middle center p-1 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white">
+                                <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M4 16h13M4 16l4-4m-4 4 4 4M20 8H7m13 0-4 4m4-4-4-4" />
+                                </svg>
+                            </button>
+                        </p>
+                    </td>
+                </tr>
+                <!-- Main modal -->
+                <div id="crud-modal-edit-{{article.id}}" tabindex="-1" aria-hidden="true"
+                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div class="relative p-4 w-full max-w-md max-h-full">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div class="flex items-center justify-between mb-0 p-4 md:p-5 border-b rounded-t">
+                                <h3 class="text-lg font-semibold text-gray-900">
+                                    Modifier le Stock
+                                </h3>
+                                <button type="button"
+                                    class="text-gray-400 px-2 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                    data-modal-toggle="crud-modal-edit-{{article.id}}">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <form action="{{url_for('admin_stocks_add')}}" method="POST" enctype="multipart/form-data"
+                                class="p-4 md:p-5">
+                                <div class="grid gap-4 mx-5 mb-4 mb-4 grid-cols-4">
+                                    <div class="col-span-4">
+                                        <label for="article_id"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Article</label>
+                                        <select id="article_id" name="article_id"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                            <option value="{{article.id}}">{{article.libelle}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-2">
+                                        <label for="in_out"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Mouvement</label>
+                                        <select id="in_out" name="in_out"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                            <option selected="">Selectionner</option>
+                                            <option value="True">Entrée</option>
+                                            <option value="False">Sortie</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-2">
+                                        <label for="quantity"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Quantité</label>
+                                        <input type="number" name="quantity" id="quantity"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                            placeholder="0" min=0 required="">
+                                    </div>
+                                    <div class="col-span-4">
+                                        <label for="fournisseur_id"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Fournisseur</label>
+                                        <select id="fournisseur_id" name="fournisseur_id"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                            <option selected="">Selectionner</option>
+                                            {% if fournisseurs %}
+                                            {% for fournisseur in fournisseurs %}
+                                            <option value="{{fournisseur.id}}">{{fournisseur.name}}</option>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="text-white mx-5 mb-5 inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6" />
+                                    </svg>
+                                    Enrégistrer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">Aucun article dans le stock</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="w-full mt-0">
+        <hr class="my-1 mt-3 bg-gray-400 mt-8 text-gray-600 border-b-1 border-gray-500">
+        <div class="text-xl pb-0 items-center text-center m-10">
+            <p>
+                Les entrées et sorties
+            </p>
+
+        </div>
+    </div>
+    <div class="bg-white overflow-auto">
+        <table class="min-w-full leading-normal">
+            <thead>
+                <tr>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Article
+                    </th>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Mouvement
+                    </th>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Quantité
+                    </th>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Fournisseur
+                    </th>
+                    <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                        Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data %}
+                {% for stock in data %}
+                <tr>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        {% if articles %}
+                        {% for article in articles %}
+                        {% if article.id == stock.article_id %}
+                        <p class="text-gray-900 whitespace-no-wrap">
+                            {{ article.libelle }}
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        {% if stock.in_out == True %}
+                        <span class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                            <span aria-hidden class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                            <span class="relative">Entrée</span>
+                        </span>
+                        {% elif stock.in_out == False %}
+                        <span class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                            <span aria-hidden class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                            <span class="relative">Sortie</span>
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ stock.quantity }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        {% if fournisseurs %}
+                        {% for fournisseur in fournisseurs %}
+                        {% if fournisseur.id == stock.fournisseur_id %}
+                        <p class="text-gray-900 whitespace-no-wrap">
+                            {{ fournisseur.name }}
+                        </p>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td class="px-5 py-2 border-b border-gray-200 bg-white text-sm">
+                        <div class="flex items-center">
+                            <div class="ml-3">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{ stock.created_at.strftime("%B %d, %Y") }}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Main modal -->
+                <div id="crud-modal-edit-{{stock.id}}" tabindex="-1" aria-hidden="true"
+                    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div class="relative p-4 w-full max-w-md max-h-full">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow">
+                            <!-- Modal header -->
+                            <div class="flex items-center justify-between mb-0 p-4 md:p-5 border-b rounded-t">
+                                <h3 class="text-lg font-semibold text-gray-900">
+                                    Modifier la Stock
+                                </h3>
+                                <button type="button"
+                                    class="text-gray-400 px-2 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                                    data-modal-toggle="crud-modal-edit-{{stock.id}}">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <form action="{{url_for('admin_stocks_update',id=stock.id)}}" method="POST"
+                                enctype="multipart/form-data" class="p-4 md:p-5">
+                                <div class="grid gap-4 mx-5 mb-4 mb-4 grid-cols-4">
+                                    <div class="col-span-4">
+                                        <label for="article_id"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Article</label>
+                                        <select id="article_id" name="article_id"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                            {% if articles %}
+                                            {% for article in articles %}
+                                            <option value="{{article.id}}" {% if stock.article_id==article.id
+                                                %}selected{% endif %}>{{article.libelle}}</option>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-2">
+                                        <label for="in_out"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Mouvement</label>
+                                        <select id="in_out" name="in_out"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                            <option selected="">Selectionner</option>
+                                            <option value="True" {% if stock.in_out==True %}selected{% endif %}>
+                                                Entrée</option>
+                                            <option value="False" {% if stock.in_out==False %}selected{% endif %}>
+                                                Sortie</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-2">
+                                        <label for="quantity"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Quantité</label>
+                                        <input type="number" name="quantity" value="{{stock.quantity}}" id="quantity"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                            placeholder="Nombre de place" required="">
+                                    </div>
+                                    <div class="col-span-4 sm:col-span-2">
+                                        <label for="forunisseur_id"
+                                            class="block mb-2 text-sm font-medium text-gray-900">Fournisseur</label>
+                                        <select id="forunisseur_id" name="forunisseur_id"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                            {% if fournisseurs %}
+                                            {% for fournisseur in fournisseurs %}
+                                            <option value="{{fournisseur.id}}" {% if
+                                                stock.fournisseur_id==fournisseur.id %}selected{% endif %}>
+                                                {{fournisseur.name}}</option>
+                                            {% endfor %}
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="text-white mx-5 mb-5 inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                    <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+                                        viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6" />
+                                    </svg>
+                                    Enrégistrer
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">Aucune modification apporter au stock</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Main modal -->
+    <div id="crud-modal-add" tabindex="-1" aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        Modifier le Stock
+                    </h3>
+                    <button type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                        data-modal-toggle="crud-modal-add">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form action="{{url_for('admin_stocks_add')}}" method="POST" enctype="multipart/form-data"
+                    class="p-4 md:p-5">
+                    <div class="grid gap-4 mb-4 grid-cols-4">
+                        <div class="col-span-4">
+                            <label for="article_id" class="block mb-2 text-sm font-medium text-gray-900">Article</label>
+                            <select id="article_id" name="article_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <option selected="">Selectionner l'article</option>
+                                {% if articles %}
+                                {% for article in articles %}
+                                <option value="{{article.id}}">{{article.libelle}}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="col-span-4 sm:col-span-2">
+                            <label for="in_out" class="block mb-2 text-sm font-medium text-gray-900">Mouvement</label>
+                            <select id="in_out" name="in_out"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <option selected="">Selectionner</option>
+                                <option value="True">Entrée</option>
+                                <option value="False">Sortie</option>
+                            </select>
+                        </div>
+                        <div class="col-span-4 sm:col-span-2">
+                            <label for="quantity" class="block mb-2 text-sm font-medium text-gray-900">Quantité</label>
+                            <input type="number" name="quantity" id="quantity"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                placeholder="0" min=0 required="">
+                        </div>
+                        <div class="col-span-4">
+                            <label for="fournisseur_id"
+                                class="block mb-2 text-sm font-medium text-gray-900">Fournisseur</label>
+                            <select id="fournisseur_id" name="fournisseur_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                <option selected="">Selectionner</option>
+                                {% if fournisseurs %}
+                                {% for fournisseur in fournisseurs %}
+                                <option value="{{fournisseur.id}}">{{fournisseur.name}}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="text-white inline-flex items-center bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        <svg class="w-6 h-6 text-gray-800 text-white" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6" />
+                        </svg>
+                        Enrégistrer
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

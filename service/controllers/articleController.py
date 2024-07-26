@@ -18,13 +18,12 @@ class ArticleController:
         article = self.service.get(Article, id)
         if not article:
             abort(404)
-        return jsonify(article)
+        return article
 
     def create_article(self):
         fournisseurs = self.service.get_all(Fournisseur)
         articleFamilies = self.service.get_all(ArticleFamily)
         if request.method == "POST":
-            print(request.form)
             if not request.form or not 'libelle' in request.form or not 'fournisseur_id' in request.form:
                 abort(400)
             status = None
@@ -56,7 +55,6 @@ class ArticleController:
         fournisseurs = self.service.get_all(Fournisseur)
         articleFamilies = self.service.get_all(ArticleFamily)
         article = self.service.get(Article, id)
-        print(article)
         if not article:
             abort(404)
         data = {}

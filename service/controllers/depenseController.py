@@ -11,7 +11,7 @@ class DepenseController:
         
     def get_depenses(self):
         depenses = self.service.get_all(Depense)
-        return render_template("pages/admin/pages/depenses/index.html", user=current_user.username, data=depenses)
+        return render_template("pages/depenses/index.html", user=current_user.username, data=depenses)
 
     def get_depense(self, id):
         depense = self.service.get(Depense, id)

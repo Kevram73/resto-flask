@@ -14,6 +14,8 @@ from service.controllers.casheerController import CasheerController
 from service.controllers.typeCategoryController import TypeCategoryController
 from service.controllers.categoryController import CategoryController
 from service.controllers.companyController import CompanyController
+from service.controllers.productController import ProductController
+from service.controllers.stockController import StockController
 
 from service.models import User, Article
 import flask_bcrypt
@@ -38,6 +40,8 @@ casheerController = CasheerController()
 typeCategoryController = TypeCategoryController()
 categoryController = CategoryController()
 companyController = CompanyController()
+productController = ProductController()
+stockController = StockController()
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -365,3 +369,57 @@ def admin_companies_update(id):
 @app.route('/admin/companies/delete/<int:id>', methods=['GET','POST'])
 def admin_companies_delete(id):
     return companyController.delete_company(id)
+
+
+# Product routes
+#@login_required
+@app.route('/admin/products', methods=['GET', 'POST'])
+def admin_products():
+    return productController.get_products()
+
+#@login_required
+@app.route('/admin/products/<int:id>', methods=['GET'])
+def admin_products_get(id):
+    return productController.get_product(id)
+
+#@login_required
+@app.route('/admin/products/add', methods=['GET', 'POST'])
+def admin_products_add():
+    return productController.create_product()
+
+#@login_required
+@app.route('/admin/products/edit/<int:id>', methods=['GET', 'POST'])
+def admin_products_update(id):
+    return productController.update_product(id)
+
+#@login_required
+@app.route('/admin/products/delete/<int:id>', methods=['GET','POST'])
+def admin_products_delete(id):
+    return productController.delete_product(id)
+
+
+# Stock routes
+#@login_required
+@app.route('/admin/stocks', methods=['GET', 'POST'])
+def admin_stocks():
+    return stockController.get_stocks()
+
+#@login_required
+@app.route('/admin/stocks/<int:id>', methods=['GET'])
+def admin_stocks_get(id):
+    return stockController.get_stock(id)
+
+#@login_required
+@app.route('/admin/stocks/add', methods=['GET', 'POST'])
+def admin_stocks_add():
+    return stockController.create_stock()
+
+#@login_required
+@app.route('/admin/stocks/edit/<int:id>', methods=['GET', 'POST'])
+def admin_stocks_update(id):
+    return stockController.update_stock(id)
+
+#@login_required
+@app.route('/admin/stocks/delete/<int:id>', methods=['GET','POST'])
+def admin_stocks_delete(id):
+    return stockController.delete_stock(id)

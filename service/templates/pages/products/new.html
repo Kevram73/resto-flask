@@ -11,9 +11,9 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                         <h3 class="text-lg font-semibold text-gray-900">
-                            Modifier l'Utilisateur
+                            Créer un Produit
                         </h3>
-                        <a href="{{url_for('admin_articles')}}">
+                        <a href="{{url_for('admin_products')}}">
                             <button type="button"
                                 class="text-white inline-flex items-center bg-gray-500 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -26,72 +26,70 @@
                         </a>
                     </div>
                     <!-- Modal body -->
-                    <form action="{{url_for('admin_articles_update',id=article.id)}}" method="POST"
-                        enctype="multipart/form-data" class="p-4 md:p-5">
+                    <form action="{{url_for('admin_products_add')}}" method="POST" enctype="multipart/form-data"
+                        class="p-4 md:p-5">
                         <div class="grid gap-4 mb-4 grid-cols-4">
                             <div class="col-span-4">
-                                <label for="libelle"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Libelle</label>
-                                <input type="text" name="libelle" id="libelle" value="{{article.libelle}}"
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nom</label>
+                                <input type="text" name="name" id="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    placeholder="Nom de l'article">
+                                    placeholder="Nom du Produit" required="">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="famille" class="block mb-2 text-sm font-medium text-gray-900">Famille
-                                    d'article</label>
-                                <select id="famille" name="famille"
+                                <label for="category_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Catégorie</label>
+                                <select id="category_id" name="category_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected="">Selectionner la famille</option>
-                                    {% if families %}
-                                    {% for family in families %}
-                                    <option value="{{family.id}}" {% if article.famille==family.id %}selected{% endif
-                                        %}>{{family.name}}</option>
+                                    <option value="" selected="">Selectionner Catégorie</option>
+                                    {% if categories %}
+                                    {% for category in categories %}
+                                    <option value="{{category.id}}">{{category.name}}</option>
                                     {% endfor %}
                                     {% endif %}
                                 </select>
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="fournisseur_id"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Fournisseur</label>
-                                <select id="fournisseur_id" name="fournisseur_id"
+                                <label for="group_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Groupe</label>
+                                <select id="group_id" name="group_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
-                                    <option selected="">Selectionner le fournisseur</option>
-                                    {% if fournisseurs %}
-                                    {% for fournisseur in fournisseurs %}
-                                    <option value="{{fournisseur.id}}" {% if article.fournisseur_id==fournisseur.id
-                                        %}selected{% endif %}>{{fournisseur.name}}</option>
+                                    <option value="" selected="">Selectionner groupe</option>
+                                    {% if groups %}
+                                    {% for group in groups %}
+                                    <option value="{{group.id}}">{{group.name}}</option>
                                     {% endfor %}
                                     {% endif %}
                                 </select>
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="prix_achat_unit" class="block mb-2 text-sm font-medium text-gray-900">Prix
-                                    d'achat (PU)</label>
-                                <input type="number" name="prix_achat_unit" id="prix_achat_unit"
-                                    value="{{article.prix_achat_unit}}"
+                                <label for="price" class="block mb-2 text-sm font-medium text-gray-900">Prix</label>
+                                <input type="number" name="price" id="price"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    min=0.0 required="">
+                                    min=0.0 placeholder="0.0" required="">
                             </div>
                             <div class="col-span-4 sm:col-span-2">
-                                <label for="prix_vente_unit" class="block mb-2 text-sm font-medium text-gray-900">Prix
-                                    de vente (PU)</label>
-                                <input type="number" name="prix_vente_unit" id="prix_vente_unit"
-                                    value="{{article.prix_vente_unit}}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    min=0.0>
+                                <label for="active" class="block mb-2 text-sm font-medium text-gray-900">Statut</label>
+                                <select id="active" name="active"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                    <option selected="">Selectionner état</option>
+                                    <option value="True">Disponible</option>
+                                    <option value="False">Indisponible</option>
+                                </select>
                             </div>
-                            <!--div class="col-span-4 sm:col-span-2">
-                                <label for="quantity"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Quantité</label>
-                                <input type="number" name="quantity" id="quantity" value="{{article.quantity}}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                    min=0.0 placeholder="0.0">
-                            </!--div-->
-
                             <div class="col-span-4">
-                                <label for="unite" class="block mb-2 text-sm font-medium text-gray-900">Unité</label>
-                                <input type="number" name="unite" id="unite" value="{{article.unite}}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                                <label class="block mb-2 text-sm font-medium text-gray-900" for="image">Télécharger
+                                    image du produit
+                                </label>
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
+                                    id="image" name="image" type="file">
+                            </div>
+                            <div class="col-span-4">
+                                <label for="description"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Description</label>
+                                <textarea id="description" name="description" rows="4"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                    placeholder="Ecrivez la description du produit ici..."></textarea>
                             </div>
                         </div>
                         <button type="submit"

@@ -14,7 +14,7 @@ class FileManager:
     def remove_suffix_from_path(self, original_path):
     
         # Ensure the path is treated as a raw string
-        suffix = 'controller'
+        suffix = 'services'
         original_path = os.path.abspath(original_path)
         original_path = rf"{original_path}"
         
@@ -32,6 +32,7 @@ class FileManager:
 
     def save_file(self, file):
         if file and self.allowed_file(file.filename):
+            print('Image save')
             ext = file.filename.rsplit('.', 1)[1].lower()
             filename = secure_filename(f"{uuid.uuid4().hex}.{ext}")
             folder = self.base_folder()
